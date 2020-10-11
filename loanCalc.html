@@ -1,0 +1,123 @@
+<html>
+	<head>
+		<title>Optimal Loan Term Calculator</title>
+	</head>
+	<body>
+		<center>
+			<h2>Optimal Loan Term Calculator</h2>
+					<p>
+						<td>Stock Market Return Annually: </td>
+						<td><input type="text" id="market_rate"</td>
+					</p>
+					<p>
+						<td><input type="button" value="Add Loan Offer" onClick="addLoan()"/></td>
+					</p>
+            <table>
+            <form>
+					<tr>
+						<td>Loan Principal: </td>
+						<td><input type="text" id="principal"</td> 
+                        <td id = "principalDummy"></td> 
+					</tr>
+					<tr>
+						<td>No. of Years: </td>
+						<td><input type="text" id="years"</td>
+                        <td id = "yearsDummy"></td> 
+					</tr>
+					<tr>
+						<td>Interest Rate Percent</td>
+						<td><input type="text" id="rate"</td>
+                        <td id = "rateDummy"></td> 
+					</tr>
+					<tr>
+                </table>
+                <table>
+						<td></td>
+						<td><input type="button" value="Calulate" onClick="Calculate()"/>&nbsp;&nbsp;<input type="reset" value="Clear"/></td>
+					</tr>
+                    <tr>
+                        <td>
+                        Monthly Payments:  
+                        </td>
+                        <td>
+                        <b id = "monthly_payment"></b> 
+                        </td>
+                        <td id = "monthly_paymentsDummy"></td> 
+                    </tr>
+                    <tr>
+                        <td>
+                        Total Payment: 
+                        </td>
+                        <td>
+                        <b id = "total_payment"></b> 
+                        </td>
+                        <td id = "total_paymentDummy"></td> 
+                    </tr>
+                    <tr>
+                        <td>
+                        Total Interest Payed: 
+                        </td>
+                        <td>
+                        <b id = "interest_payed"></b> 
+                        </td>
+                        <td id = "interest_payedDummy"></td> 
+				</table>
+            </form>
+		</center>
+    <script>
+        function Calculate() {
+            var principal = document.getElementById("principal").value;
+            var term = document.getElementById("years").value;
+            var n = 12 //document.getElementById("n").value;
+            var market_rate = document.getElementById("market_rate").value;
+            var rate = document.getElementById("rate").value;
+            var r = rate / (100 * n);
+            var n = n * term;
+            var monthly_payment = principal * ((r * (1 + r) ** n)/(((1 + r) ** n) - 1));
+            var total_payment = monthly_payment * n;
+            var interest_payed = total_payment - principal;
+            document.getElementById("monthly_payment").innerHTML = monthly_payment.toFixed(2);
+            document.getElementById("total_payment").innerHTML = total_payment.toFixed(2);
+            document.getElementById("interest_payed").innerHTML = interest_payed.toFixed(2);
+        }
+        
+        function addField(element_id, title, id_name) {
+            const newElement = document.createElement("td");
+            const text = document.createTextNode(title);
+            const field = document.createElement("input");
+            field.type = "text";
+            field.id = id_name;
+            newElement.appendChild(text);
+            newElement.appendChild(field);
+            var oldElement= document.getElementById(element_id);
+            oldElement.insertBefore(newElement, oldElement.childNodes[oldElement.childElementCount]); 
+        
+        }
+        function addResult(element_id, title, id_name) {
+            const newElement = document.createElement("td");
+            const text = document.createTextNode(title);
+            const result = document.createElement("b");
+            result.id = id_name;
+            newElement.appendChild(text);
+            newElement.appendChild(result);
+            var oldElement= document.getElementById(element_id);
+            oldElement.insertBefore(newElement, oldElement.parentNode[oldElement.childElementCount])
+        }
+        
+        function addLoan(){
+            addField("principalDummy", "Loan Principal: ", "newPrincipal");
+            addField("rateDummy", "Interest Rate Percent: ", "newRate");
+            addField("yearsDummy", "No. Years: ", "newYears");
+            addResult("monthly_paymentsDummy", "Monthly Payments: ", "newMonthly");
+            addResult("total_paymentDummy", "Total Payment: ", "newTotal");
+            addResult("interest_payedDummy", "Total Interest Payed: ", "newInterest");
+        }
+        </script>
+
+
+
+
+
+	</body>
+
+</html>
